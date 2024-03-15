@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import os
 import torch.nn as nn
-
+from data_split import *
 
 print('check 1')
 ## TODO: get list of image paths and labels
@@ -21,7 +21,7 @@ print('check 2')
 
 all_imgs = [item for item in all_slices if item.endswith('.jpg')]
 
-def find_label(img_name, img_labels):
+def find_label_patient_id(img_name, img_labels):
    
     name_column = 'scan_name'
 
@@ -38,14 +38,25 @@ for i in range(len(all_imgs)):
     else:
         labels.append(0)
 
+#dataset
+all_imgs_df = pd.DataFrame({'scan_name': all_imgs, 'label': labels})
 
 print('check 3')
+# split scans random
 X_trainval, X_test, y_trainval, y_test = train_test_split(all_imgs, labels, test_size=0.2, random_state=42)
 X_train, X_val, y_train, y_val = train_test_split(X_trainval, y_trainval, test_size=0.2, random_state=42)
+
+# split by patient ID
+train_patient_id = ['64','47','341']
+test_patient_id = ['345','321','190']
+val_patient_id = ['578','326']
+# X_train, X_test, y_train, y_test, X_val, y_val = split_by_id(img_labels, all_imgs, labels, train_patient_id,test_patient_id,val_patient_id)
+
 print('check 4')
 train_dataset = DataGen(X_train, y_train, all_slices_path, image_height=1536, image_width=500)
 val_dataset = DataGen(X_val, y_val, all_slices_path, image_height=1536, image_width=500)
 test_dataset = DataGen(X_test, y_test, all_slices_path, image_height=1536, image_width=500)
+
 print('check 5')
 train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 val_dataloader = DataLoader(val_dataset, batch_size=32)
