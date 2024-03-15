@@ -47,9 +47,9 @@ X_trainval, X_test, y_trainval, y_test = train_test_split(all_imgs, labels, test
 X_train, X_val, y_train, y_val = train_test_split(X_trainval, y_trainval, test_size=0.2, random_state=42)
 
 # split by patient ID
-train_patient_id = ['64','47','341']
-test_patient_id = ['345','321','190']
-val_patient_id = ['578','326']
+# train_patient_id = ['64','47','341']
+# test_patient_id = ['345','321','190']
+# val_patient_id = ['578','326']
 # X_train, X_test, y_train, y_test, X_val, y_val = split_by_id(img_labels, all_imgs, labels, train_patient_id,test_patient_id,val_patient_id)
 
 print('check 4')
