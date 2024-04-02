@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 #data paths
 img_labels = pd.read_csv('data/per_scan_data.csv')
@@ -36,28 +35,28 @@ train_patient_id = [64,47,341]
 test_patient_id = [345,321,190]
 val_patient_id = [578,326]
 
-# def split_by_id(img_labels, all_imgs, labels, train_patient_id,test_patient_id,val_patient_id):
-train_df = merged_df[merged_df['patient_id'].isin(train_patient_id)]
-test_df = merged_df[merged_df['patient_id'].isin(test_patient_id)]
-val_df = merged_df[merged_df['patient_id'].isin(val_patient_id)]
+def split_by_id(img_labels, all_imgs, labels, train_patient_id,test_patient_id,val_patient_id):
+    train_df = merged_df[merged_df['patient_id'].isin(train_patient_id)]
+    test_df = merged_df[merged_df['patient_id'].isin(test_patient_id)]
+    val_df = merged_df[merged_df['patient_id'].isin(val_patient_id)]
 
-train_df.info()
+    train_df.info()
 
-# Splitting the training, testing and validation sets
-X_train = train_df['scan_name']
-Y_train = train_df['label']
-X_test = test_df['scan_name']
-Y_test = test_df['label']
+    # Splitting the training, testing and validation sets
+    X_train = train_df['scan_name']
+    Y_train = train_df['label']
+    X_test = test_df['scan_name']
+    Y_test = test_df['label']
 
-# Splitting the validation set
-X_val = val_df['scan_name']
-Y_val = val_df['label']
+    # Splitting the validation set
+    X_val = val_df['scan_name']
+    Y_val = val_df['label']
 
-print(len(Y_train))
-print(len(Y_val))
-print(len(Y_test))
+    print(len(Y_train))
+    print(len(Y_val))
+    print(len(Y_test))
 
-# return X_train, Y_train, X_test, Y_test, X_val, Y_val
+return X_train, Y_train, X_test, Y_test, X_val, Y_val
 
 
 

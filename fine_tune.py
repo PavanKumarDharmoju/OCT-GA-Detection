@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import os
 import torch.nn as nn
-from data_split import *
+from patient_split_by_id import *
 
 print('check 1')
 ## TODO: get list of image paths and labels
@@ -41,16 +41,21 @@ for i in range(len(all_imgs)):
 #dataset
 all_imgs_df = pd.DataFrame({'scan_name': all_imgs, 'label': labels})
 
-print('check 3')
-# split scans random
-X_trainval, X_test, y_trainval, y_test = train_test_split(all_imgs, labels, test_size=0.2, random_state=42)
-X_train, X_val, y_train, y_val = train_test_split(X_trainval, y_trainval, test_size=0.2, random_state=42)
+split_settings = 0
 
-# split by patient ID
-# train_patient_id = ['64','47','341']
-# test_patient_id = ['345','321','190']
-# val_patient_id = ['578','326']
-# X_train, X_test, y_train, y_test, X_val, y_val = split_by_id(img_labels, all_imgs, labels, train_patient_id,test_patient_id,val_patient_id)
+train_patient_id = ['64', '47', '341']
+test_patient_id = ['345', '321', '190']
+val_patient_id = ['578', '326']
+
+print('check 3')
+
+if split_settings == 1:
+    # split by patient ID
+    X_train, X_test, y_train, y_test, X_val, y_val = split_by_id(img_labels, all_imgs, labels, train_patient_id,test_patient_id,val_patient_id)
+else:
+    # split scans random
+    X_trainval, X_test, y_trainval, y_test = train_test_split(all_imgs, labels, test_size=0.2, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(X_trainval, y_trainval, test_size=0.2, random_state=42)
 
 print('check 4')
 train_dataset = DataGen(X_train, y_train, all_slices_path, image_height=1536, image_width=500)
@@ -62,6 +67,7 @@ train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 val_dataloader = DataLoader(val_dataset, batch_size=32)
 test_dataloader = DataLoader(test_dataset, batch_size=32)
 print('check 6')
+
 # Step 3: Load Pre-trained Model and Feature Extractor
 feature_extractor = AutoFeatureExtractor.from_pretrained("microsoft/resnet-18")
 model = AutoModelForImageClassification.from_pretrained("microsoft/resnet-18")
