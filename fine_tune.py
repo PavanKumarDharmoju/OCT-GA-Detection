@@ -41,11 +41,13 @@ for i in range(len(all_imgs)):
 #dataset
 all_imgs_df = pd.DataFrame({'scan_name': all_imgs, 'label': labels})
 
-split_settings = 0
+split_settings = 1
+# setting 0 = random split
+# setting 1 = by patient ID
 
 train_patient_id = ['64', '47', '341']
-test_patient_id = ['345', '321', '190']
 val_patient_id = ['578', '326']
+test_patient_id = ['345', '321', '190']
 
 print('check 3')
 

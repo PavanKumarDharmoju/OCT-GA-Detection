@@ -56,7 +56,7 @@ def split_by_id(img_labels, all_imgs, labels, train_patient_id,test_patient_id,v
     print(len(Y_val))
     print(len(Y_test))
 
-return X_train, Y_train, X_test, Y_test, X_val, Y_val
+    return X_train, Y_train, X_test, Y_test, X_val, Y_val
 
 
 
