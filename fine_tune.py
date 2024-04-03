@@ -32,7 +32,7 @@ labels = []
 for i in range(len(all_imgs)):
     img_name = all_imgs[i]
 
-    label = find_label(img_name, img_labels)
+    label = find_label_patient_id(img_name, img_labels)
     if label == True:
         labels.append(1)
     else:
